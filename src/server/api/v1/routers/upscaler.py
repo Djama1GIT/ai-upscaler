@@ -7,6 +7,7 @@ from src.server.dependencies.settings import get_settings
 from src.server.dependencies.upscaler import get_upscaler
 from src.server.logger import logger
 from src.server.upscaler.opencv import Upscaler
+from src.server.utils.history import RequestHistory
 
 router = APIRouter(
     prefix="/upscaler",
@@ -15,6 +16,7 @@ router = APIRouter(
 
 
 @router.post("/upscale/")
+@RequestHistory()
 async def upscale(
         image: UploadFile = File(...),
         upscaler: Upscaler = Depends(get_upscaler(get_settings)),

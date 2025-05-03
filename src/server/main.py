@@ -8,6 +8,7 @@ from pydantic import ValidationError
 from src.server.config import Settings
 from src.server.api.v1.routers.upscaler import router as upscaler_router_v1
 from src.server.api.v1.routers.models import router as models_router_v1
+from src.server.api.v1.routers.history import router as history_router_v1
 
 # Load application configuration
 settings = Settings()  # type: ignore[call-arg]
@@ -37,10 +38,12 @@ app.add_middleware(
 # Include routers for latest API version
 app.include_router(upscaler_router_v1, prefix="/api/latest")
 app.include_router(models_router_v1, prefix="/api/latest")
+app.include_router(history_router_v1, prefix="/api/latest")
 
 # Include routers for v1 API
 v1.include_router(upscaler_router_v1)
 v1.include_router(models_router_v1)
+v1.include_router(history_router_v1)
 
 # Mount v1 application under /api/v1 path
 app.mount("/api/v1", v1)
