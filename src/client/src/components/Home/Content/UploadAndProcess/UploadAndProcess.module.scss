@@ -1,0 +1,122 @@
+.rowContainer {
+  width: 100%;
+
+  .uploadCard {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+
+    .dragger {
+      padding: 40px 20px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .uploadIcon {
+      font-size: 48px;
+      color: #1890ff;
+      margin-bottom: 20px;
+    }
+
+    .uploadTitle {
+      margin-bottom: 8px;
+    }
+
+    .fileTypes {
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .bottomSpace {
+      width: 100%;
+
+      .modelSelection {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .ant-select {
+          margin-left: 8px;
+        }
+      }
+
+      .processButton {
+        height: 48px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .progressContainer {
+        margin-top: 16px;
+
+        .progressTip {
+          font-size: 12px;
+          margin-top: 8px;
+          display: block;
+        }
+      }
+
+      .resultAlert {
+        margin-top: 16px;
+        border-radius: 8px;
+      }
+
+      .comparisonContainer {
+        width: 100%;
+        margin-top: 24px;
+      }
+
+      .comparisonTitle {
+        text-align: center;
+        margin-bottom: 16px !important;
+      }
+
+      .imagesComparison {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        overflow-x: auto;
+        padding: 8px 0;
+      }
+
+      .imagePair {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .imageWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        max-width: 50%;
+      }
+
+      .imageLabel {
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+
+      .comparisonImage {
+        width: 100%;
+        object-fit: cover;
+        border: 1px solid #f0f0f0;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        .imagePair {
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .imageWrapper {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

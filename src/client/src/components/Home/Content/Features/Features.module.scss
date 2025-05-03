@@ -1,0 +1,25 @@
+.featuresRow {
+  margin-top: 40px;
+
+  .featureCard {
+    height: 100%;
+    text-align: center;
+    transition: all 0.3s;
+    border-radius: 8px;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .featureIcon {
+    font-size: 36px;
+    color: #1890ff;
+    margin-bottom: 16px;
+  }
+
+  .featureTitle {
+    margin-bottom: 12px;
+  }
+}

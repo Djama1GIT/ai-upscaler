@@ -8,7 +8,10 @@ from src.server.dependencies.upscaler import get_upscaler
 from src.server.logger import logger
 from src.server.upscaler.opencv import Upscaler
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/upscaler",
+    tags=["Upscaler"],
+)
 
 
 @router.post("/upscale/")

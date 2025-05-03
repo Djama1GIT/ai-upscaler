@@ -1,0 +1,57 @@
+.header {
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    margin-left: 200px;
+  }
+
+  .logoContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .logoText {
+    color: #1890ff;
+  }
+
+  .logoHighlight {
+    color: #722ed1;
+  }
+
+  .tagline {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .howItWorksButton {
+    margin-left: auto;
+    padding: 0 16px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: #1890ff!important;
+      background: transparent!important;
+    }
+  }
+
+  .themeToggle {
+    margin-left: 12em;
+  }
+}
