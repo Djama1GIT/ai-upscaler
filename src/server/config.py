@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     MODELS_PATH: Path
     """Path to the directory where the models are stored."""
 
+    USE_CUDA: bool = False
+    """Whether to use CUDA for AI model operations."""
+
     # FastAPI documentation settings
     TITLE: str
     """Title of the API documentation."""

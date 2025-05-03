@@ -16,7 +16,7 @@ class Upscaler:  # todo make async
     Работает с байтами на входе и выходе.
     """
 
-    def __init__(self, model: ModelEnum, settings: Settings, use_cuda: bool = False):
+    def __init__(self, model: ModelEnum, settings: Settings, use_cuda: bool = None):
         """
         Инициализация апскейлера.
 
@@ -28,7 +28,7 @@ class Upscaler:  # todo make async
         self.model_path = str(self.settings.MODELS_PATH / model.value.model_name / model.value.model_type)
         self.model_name = model.value.model_name
         self.scale = model.value.scale
-        self.use_cuda = use_cuda
+        self.use_cuda = use_cuda if use_cuda is not None else self.settings.USE_CUDA
 
         if not os.path.exists(self.model_path):
             raise FileNotFoundError(f"Model file not found: {self.model_path}")
