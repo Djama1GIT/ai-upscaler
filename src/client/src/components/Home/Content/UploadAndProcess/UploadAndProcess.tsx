@@ -43,8 +43,16 @@ const UploadAndProcessComponent: React.FC = () => {
   const processingStartTime = useRef<number>(0);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Очищаем интервал при размонтировании компонента
   useEffect(() => {
-    // Загружаем список доступных моделей при монтировании компонента
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchModels = async () => {
       try {
         // @ts-ignore
@@ -53,7 +61,7 @@ const UploadAndProcessComponent: React.FC = () => {
         const data = await response.json();
         setModels(data.models);
         if (data.models.length > 0) {
-          setSelectedModel(data.models[0]); // Устанавливаем первую модель по умолчанию
+          setSelectedModel(data.models[0]);
         }
       } catch (error) {
         console.error("Failed to fetch models:", error);
@@ -63,6 +71,10 @@ const UploadAndProcessComponent: React.FC = () => {
 
     fetchModels();
   }, []);
+
+  useEffect(() => {
+    setResultImage(null);
+  }, [selectedModel]);
 
   const handleUpload: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
@@ -87,11 +99,18 @@ const UploadAndProcessComponent: React.FC = () => {
   const startProcessing = async (): Promise<void> => {
     if (fileList.length === 0) return;
 
+    // Очищаем предыдущий интервал, если он существует
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
+    }
+
     const file = fileList[0];
     if (!file.originFileObj) return;
 
     setIsUploading(true);
     setIsProcessing(true);
+    setResultImage(null);
     setProgress(10);
     setError(null);
     processingStartTime.current = Date.now();
@@ -99,12 +118,18 @@ const UploadAndProcessComponent: React.FC = () => {
     // Симуляция прогресса
     progressIntervalRef.current = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 90) {
-          return 90; // Останавливаем на 90%, ждем реальный ответ
+        if (prev >= 25) {
+          setIsUploading(false);
         }
-        return prev + 10;
+        if (prev >= 98) {
+          return 98;
+        }
+        if (prev < 20) return prev + 1;
+        if (prev >= 70) return prev + 0.1;
+        if (prev >= 90) return prev + 0.05;
+        else return prev + 0.5;
       });
-    }, 1000);
+    }, 100);
 
     try {
       const formData = new FormData();
@@ -137,6 +162,7 @@ const UploadAndProcessComponent: React.FC = () => {
       setIsProcessing(false);
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
       }
     }
   };
@@ -149,6 +175,7 @@ const UploadAndProcessComponent: React.FC = () => {
     setProgress(0);
     if (progressIntervalRef.current) {
       clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
     }
     message.error(`Ошибка обработки: ${error}`);
   };
@@ -249,13 +276,13 @@ const UploadAndProcessComponent: React.FC = () => {
                   {isUploading ? 'Загрузка изображения на сервер...' : 'Улучшение изображения...'}
                 </Text>
                 <Progress
-                  percent={progress}
+                  percent={Number(progress.toFixed(0))}
                   status="active"
                   strokeColor={progressStrokeColor}
                 />
                 <Text type="secondary" className={styles.progressTip}>
                   {isUploading ? 'Пожалуйста, подождите...' :
-                    'Обычно обработка занимает 10-30 секунд в зависимости от размера изображения'}
+                    'Обычно обработка занимает 30-50 секунд в зависимости от размера изображения'}
                 </Text>
               </div>
             )}
